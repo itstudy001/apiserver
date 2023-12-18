@@ -12,14 +12,11 @@ permissions:
     
 env:
   AWS_REGION: ap-northeast-2
-  ECR_REPOSITORY: apiserver
+  ECR_REPOSITORY: djangoserver
   ECS_TASK_DEFINITION: ./task-definition.json
   CONTAINER_NAME: apiserver
-  ECS_SERVICE: nginsservice
+  ECS_SERVICE: apiserver
   ECS_CLUSTER: apiserver              
-
-        
-  
 
 jobs:
   build:
@@ -78,5 +75,3 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
-
-  

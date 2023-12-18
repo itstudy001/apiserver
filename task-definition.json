@@ -1,13 +1,13 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:641022061021:task-definition/nginxfamily:4",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:641022061021:task-definition/apiserver:2",
     "containerDefinitions": [
         {
-            "name": "nginxc",
-            "image": "nginx",
+            "name": "apiserver",
+            "image": "641022061021.dkr.ecr.ap-northeast-2.amazonaws.com/djangoserver:latest",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "nginxcontainer-80-tcp",
+                    "name": "apiserver-80-tcp",
                     "containerPort": 80,
                     "hostPort": 80,
                     "protocol": "tcp",
@@ -24,7 +24,7 @@
                 "logDriver": "awslogs",
                 "options": {
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/nginxfamily",
+                    "awslogs-group": "/ecs/apiserver",
                     "awslogs-region": "ap-northeast-2",
                     "awslogs-stream-prefix": "ecs"
                 },
@@ -32,10 +32,10 @@
             }
         }
     ],
-    "family": "nginxfamily",
+    "family": "apiserver",
     "executionRoleArn": "arn:aws:iam::641022061021:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 4,
+    "revision": 2,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -46,7 +46,13 @@
             "name": "ecs.capability.execution-role-awslogs"
         },
         {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
         },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
@@ -72,7 +78,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-12-17T01:45:56.727Z",
+    "registeredAt": "2023-12-18T05:07:49.136Z",
     "registeredBy": "arn:aws:iam::641022061021:root",
     "tags": []
 }
