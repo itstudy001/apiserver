@@ -12,11 +12,13 @@ permissions:
     
 env:
   AWS_REGION: ap-northeast-2
-  ECR_REPOSITORY: apiserver  
-  ECS_SERVICE: nginsservice
-  ECS_CLUSTER: apiserver                 
+  ECR_REPOSITORY: apiserver
   ECS_TASK_DEFINITION: ./task-definition.json
-  CONTAINER_NAME: apiserver       
+  CONTAINER_NAME: apiserver
+  ECS_SERVICE: nginsservice
+  ECS_CLUSTER: apiserver              
+
+        
   
 
 jobs:
