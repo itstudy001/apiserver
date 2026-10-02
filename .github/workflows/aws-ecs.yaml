@@ -11,9 +11,9 @@ env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: apiserver
   ECR_CLUSTER: itstudycluster
-  ECS_SERVICE: nginxservice
+  ECS_SERVICE: itstudytask-service
   ECS_TASK_DEFINITION: ./task-definition.json
-  CONTAINER_NAME: apiserver
+  CONTAINER_NAME: itstudy
 
 jobs:
   build:
@@ -57,3 +57,18 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
         
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v2
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+  
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
