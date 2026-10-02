@@ -29,5 +29,5 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::208060188195:role/apiserverrole
-          role-session-name: SampleSessionName
+          role-session-name: sampleSessionName
           aws-region: ap-northeast-2 
